@@ -1,13 +1,13 @@
-package com.example.perludilindungi.ui.notifications
+package com.example.perludilindungi.ui.bookmark
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class BookmarkViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is bookmark Fragment"
     }
     val text: LiveData<String> = _text
 }
