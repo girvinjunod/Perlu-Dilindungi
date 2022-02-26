@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perludilindungi.R
 import com.example.perludilindungi.network.NewsProperty
+import com.squareup.picasso.Picasso
+import timber.log.Timber
 
 class NewsAdapter (private val obj : NewsProperty): RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
@@ -25,8 +27,9 @@ class NewsAdapter (private val obj : NewsProperty): RecyclerView.Adapter<NewsAda
         val thumbnailView = holder.thumbnail
         headlineView.text = obj.results?.get(position)?.title
         dateView.text = obj.results?.get(position)?.pubDate
-        val url : Uri = Uri.parse("obj.results[position].image.imageUrl")
-        thumbnailView.setImageURI(url)
+        val url : Uri = Uri.parse(obj.results?.get(position)?.image?.imageUrl)
+        Timber.i(url.toString())
+        Picasso.get().load(url).into(thumbnailView)
 
     }
     override fun onCreateViewHolder(

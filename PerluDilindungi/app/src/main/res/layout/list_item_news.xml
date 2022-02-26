@@ -7,15 +7,16 @@
 
     <ImageView
         android:id="@+id/news_image"
-        android:layout_width="10dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/title_news"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/title_news" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/news_headline"
@@ -25,6 +26,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/news_image"
         app:layout_constraintTop_toTopOf="@+id/news_image"
         tools:text="Ini headline" />
@@ -33,7 +35,7 @@
         android:id="@+id/news_date"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="@+id/news_headline"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/news_headline"
