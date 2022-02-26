@@ -20,8 +20,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ApiService {
     @GET("api/get-news")
-    fun getNews():
-            Call<NewsProperty>
+    suspend fun getNews(): NewsProperty
 }
 
 object PerluDilindungiApi {

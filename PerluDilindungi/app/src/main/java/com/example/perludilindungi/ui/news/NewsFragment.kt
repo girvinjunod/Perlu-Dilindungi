@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.perludilindungi.databinding.FragmentNewsBinding
+import com.example.perludilindungi.network.NewsProperty
 import timber.log.Timber
 
 class NewsFragment : Fragment() {
@@ -24,15 +25,18 @@ class NewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
+        val newsViewModel =
             ViewModelProvider(this).get(NewsViewModel::class.java)
 
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.response.observe(viewLifecycleOwner) {
-            textView.text = it
+        var obj : NewsProperty
+//        val textView: TextView = binding.textNews
+        newsViewModel.response.observe(viewLifecycleOwner) {
+            obj = it
+            val adapter = NewsAdapter(obj)
+            Timber.i(obj.toString())
+            binding.newsList.adapter = adapter
         }
         Timber.i("onCreateView called")
         return root

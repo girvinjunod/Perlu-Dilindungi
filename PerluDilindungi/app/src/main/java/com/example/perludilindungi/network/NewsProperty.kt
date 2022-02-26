@@ -5,7 +5,7 @@ data class NewsProperty(
     val success: Boolean,
     val message: String,
     @Json(name = "count_total") val count: Int,
-    val results : List<Results>
+    val results : List<Results>?
 )
 data class Results(
     val title : String,
