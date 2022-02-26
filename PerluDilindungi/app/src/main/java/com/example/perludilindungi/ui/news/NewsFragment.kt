@@ -1,16 +1,19 @@
 package com.example.perludilindungi.ui.news
 
+import android.R
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.perludilindungi.databinding.FragmentNewsBinding
 import com.example.perludilindungi.network.NewsProperty
 import timber.log.Timber
+
 
 class NewsFragment : Fragment() {
 
@@ -32,12 +35,26 @@ class NewsFragment : Fragment() {
         val root: View = binding.root
         var obj : NewsProperty
 //        val textView: TextView = binding.textNews
+        val myWebView: WebView = binding.web
+
         newsViewModel.response.observe(viewLifecycleOwner) {
             obj = it
             val adapter = NewsAdapter(obj)
-            Timber.i(obj.toString())
+            adapter.setOnItemClickListener(object : NewsAdapter.ClickListener {
+                override fun onItemClick(position: Int, v: View?) {
+                    Timber.i("onItemClick position: $position")
+                    myWebView.visibility = View.VISIBLE
+                    myWebView.loadUrl(obj.results?.get(position)?.link?.get(0) ?: "")
+                }
+
+                override fun onItemLongClick(position: Int, v: View?) {
+                    Timber.i("onItemLongClick pos = $position")
+                }
+            })
             binding.newsList.adapter = adapter
         }
+
+
         Timber.i("onCreateView called")
         return root
     }
