@@ -1,6 +1,6 @@
 package com.example.perludilindungi.ui.news
 
-import android.R
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.example.perludilindungi.databinding.FragmentNewsBinding
 import com.example.perludilindungi.network.NewsProperty
 import timber.log.Timber
@@ -23,6 +22,7 @@ class NewsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,8 +34,9 @@ class NewsFragment : Fragment() {
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         var obj : NewsProperty
-//        val textView: TextView = binding.textNews
+
         val myWebView: WebView = binding.web
+        myWebView.settings.javaScriptEnabled = true
 
         newsViewModel.response.observe(viewLifecycleOwner) {
             obj = it
