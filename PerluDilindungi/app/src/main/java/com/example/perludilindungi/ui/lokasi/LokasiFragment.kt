@@ -35,8 +35,8 @@ class LokasiFragment : Fragment() {
         val spinnerProvinsi: Spinner = binding.spinnerProvinsi
         val spinnerCity : Spinner = binding.spinnerKota
 
-        var currProvinsi : String = ""
-        var currCity : String = ""
+        var currProvinsi = ""
+        var currCity = ""
 
         var province : LocationProperty
         lokasiViewModel.location.observe(viewLifecycleOwner) {
@@ -103,12 +103,10 @@ class LokasiFragment : Fragment() {
         })
 
         val searchBtn = binding.searchButton
-        searchBtn.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                Timber.i("Search click")
-                lokasiViewModel.getApiFaskes(currProvinsi, currCity)
-            }
-        })
+        searchBtn.setOnClickListener {
+            Timber.i("Search click")
+            lokasiViewModel.getApiFaskes(currProvinsi, currCity)
+        }
 
 
 
