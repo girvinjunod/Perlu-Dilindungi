@@ -25,7 +25,7 @@ class LokasiViewModel : ViewModel() {
         }
     }
 
-    private fun getApiCity(province : String) {
+    fun getApiCity(province : String) {
         viewModelScope.launch {
             try {
                 val result = PerluDilindungiApi.retrofitService.getCity(province)
@@ -40,7 +40,7 @@ class LokasiViewModel : ViewModel() {
         }
     }
 
-    private fun getApiFaskes(province : String, city : String) {
+    fun getApiFaskes(province : String, city : String) {
         viewModelScope.launch {
             try {
                 val result = PerluDilindungiApi.retrofitService.getFaskes(province, city)
@@ -75,7 +75,7 @@ class LokasiViewModel : ViewModel() {
 
     init {
         getApiProvince()
-        getApiCity("JAWA TENGAH")
-        getApiFaskes("JAWA TENGAH", "KAB. TEGAL")
+//        getApiCity("JAWA TENGAH")
+//        getApiFaskes("JAWA TENGAH", "KAB. TEGAL")
     }
 }
