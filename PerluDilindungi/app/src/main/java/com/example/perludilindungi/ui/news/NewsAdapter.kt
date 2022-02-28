@@ -16,12 +16,6 @@ import timber.log.Timber
 
 class NewsAdapter (private val obj : NewsProperty): RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
-//    var data = NewsProperty
-//        set(value) {
-//            field = value
-//            notifyDataSetChanged()
-//        }
-//
     interface ClickListener {
         fun onItemClick(position: Int, v: View?)
         fun onItemLongClick(position: Int, v: View?)

@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.http.GET
-import retrofit2.Call
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://perludilindungi.herokuapp.com/"
 
@@ -21,6 +21,16 @@ private val retrofit = Retrofit.Builder()
 interface ApiService {
     @GET("api/get-news")
     suspend fun getNews(): NewsProperty
+
+    @GET("api/get-province")
+    suspend fun getProvince() : LocationProperty
+
+    @GET("api/get-city")
+    suspend fun getCity(@Query("start_id") province : String) : LocationProperty
+
+    @GET("api/get-faskes-vaksinasi")
+    suspend fun getFaskes(@Query("province") province : String, @Query("city") city: String) : FaskesProperty
+
 }
 
 object PerluDilindungiApi {

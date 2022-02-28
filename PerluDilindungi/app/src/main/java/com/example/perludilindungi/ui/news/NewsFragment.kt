@@ -33,10 +33,31 @@ class NewsFragment : Fragment() {
 
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        var obj : NewsProperty
+        var obj: NewsProperty
 
         val myWebView: WebView = binding.web
         myWebView.settings.javaScriptEnabled = true
+
+//        class NewsWebViewClient : WebViewClient() {
+//            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+//                val uri = Uri.parse(url)
+//                return handleUri(uri)
+//            }
+//
+//            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest): Boolean {
+//                val uri = request.url
+//                return handleUri(uri)
+//            }
+//
+//            private fun handleUri(uri: Uri): Boolean {
+//                Timber.i( "Uri =$uri")
+//                val intent = Intent(Intent.ACTION_VIEW, uri)
+//                startActivity(intent)
+//                return true
+//            }
+//        }
+
+//        myWebView.webViewClient = WebViewClient()
 
         newsViewModel.response.observe(viewLifecycleOwner) {
             obj = it
@@ -46,6 +67,11 @@ class NewsFragment : Fragment() {
                     Timber.i("onItemClick position: $position")
                     myWebView.visibility = View.VISIBLE
                     myWebView.loadUrl(obj.results?.get(position)?.link?.get(0) ?: "")
+//                    val browserIntent = Intent("android.intent.action.VIEW", Uri.parse(obj.results?.get(position)?.link?.get(0) ?: ""))
+//                    startActivity(browserIntent)
+
+
+//                    myWebView.webViewClient = NewsWebViewClient()
                 }
 
                 override fun onItemLongClick(position: Int, v: View?) {
@@ -70,6 +96,7 @@ class NewsFragment : Fragment() {
         super.onAttach(context)
         Timber.i("onAttach called")
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.i("onCreate called")
@@ -84,20 +111,28 @@ class NewsFragment : Fragment() {
         super.onStart()
         Timber.i("onStart called")
     }
+
     override fun onResume() {
         super.onResume()
         Timber.i("onResume called")
     }
+
     override fun onPause() {
         super.onPause()
         Timber.i("onPause called")
     }
+
     override fun onStop() {
         super.onStop()
         Timber.i("onStop called")
     }
+
     override fun onDetach() {
         super.onDetach()
         Timber.i("onDetach called")
     }
+
+
 }
+
+

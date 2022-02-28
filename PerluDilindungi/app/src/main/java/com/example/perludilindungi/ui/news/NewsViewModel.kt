@@ -29,6 +29,7 @@ class NewsViewModel : ViewModel() {
         }
 
 
+
 //        PerluDilindungiApi.retrofitService.getNews().enqueue(
 //            object: Callback<NewsProperty> {
 //                override fun onResponse(call: Call<NewsProperty>, response: Response<NewsProperty>) {

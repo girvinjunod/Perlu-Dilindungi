@@ -3,4 +3,8 @@
     <string name="title_news">News</string>
     <string name="title_lokasi">Lokasi Vaksin</string>
     <string name="title_bookmark">Bookmark</string>
+    <string name="cari_faskes">Cari Faskes</string>
+    <string name="pilih_kota">Pilih Kota</string>
+    <string name="pilih_provinsi">Pilih Provinsi</string>
+    <string name="search">Search</string>
 </resources>
