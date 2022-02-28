@@ -2,7 +2,6 @@ package com.example.perludilindungi.ui.lokasi
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -121,7 +120,7 @@ class LokasiFragment : Fragment() {
             faskes = res
             Timber.i(faskes.toString())
 
-            var sorted = faskes.data
+            var sorted: List<FaskesResults>?
 
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
