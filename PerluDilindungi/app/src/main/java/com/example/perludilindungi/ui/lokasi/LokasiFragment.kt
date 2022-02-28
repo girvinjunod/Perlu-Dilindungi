@@ -53,10 +53,12 @@ class LokasiFragment : Fragment() {
 
         }
         spinnerProvinsi.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 val item = parent.getItemAtPosition(pos)
-                lokasiViewModel.getApiCity(item.toString())
-                currProvinsi = item.toString()
+                if (item != null) {
+                    lokasiViewModel.getApiCity(item.toString())
+                    currProvinsi = item.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -80,6 +82,7 @@ class LokasiFragment : Fragment() {
         var faskes: FaskesProperty
         lokasiViewModel.faskes.observe(viewLifecycleOwner) {
             faskes = it
+            Timber.i(faskes.toString())
             val adapter = LokasiAdapter(faskes)
             adapter.setOnItemClickListener(object : LokasiAdapter.ClickListener {
                 override fun onItemClick(position: Int, v: View?) {
@@ -94,9 +97,11 @@ class LokasiFragment : Fragment() {
         }
 
         spinnerCity.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 val item = parent.getItemAtPosition(pos)
-                currCity = item.toString()
+                if (item != null) {
+                    currCity = item.toString()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -106,6 +111,7 @@ class LokasiFragment : Fragment() {
         searchBtn.setOnClickListener {
             Timber.i("Search click")
             lokasiViewModel.getApiFaskes(currProvinsi, currCity)
+
         }
 
 
