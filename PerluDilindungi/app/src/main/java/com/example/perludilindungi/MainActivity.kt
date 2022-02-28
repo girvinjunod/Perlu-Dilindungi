@@ -1,17 +1,16 @@
 package com.example.perludilindungi
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.perludilindungi.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import timber.log.Timber
 
 
@@ -20,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.plant(Timber.DebugTree())
@@ -41,6 +41,24 @@ class MainActivity : AppCompatActivity() {
         )
         navView.setupWithNavController(navController)
 
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                } else -> {
+                // No location access granted.
+            }
+            }
+        }
+
+        locationPermissionRequest.launch(arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
 
     }
     override fun onStart() {

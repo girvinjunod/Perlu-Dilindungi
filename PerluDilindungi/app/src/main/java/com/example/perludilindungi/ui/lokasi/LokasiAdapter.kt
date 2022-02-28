@@ -17,6 +17,8 @@ class LokasiAdapter(private val obj : FaskesProperty): RecyclerView.Adapter<Loka
     }
     private var clickListener: ClickListener? = null
 
+    private val limit = 5
+
     override fun onBindViewHolder(holder: LokasiAdapter.ViewHolder, position: Int) {
         val namaView = holder.namaFaskes
         val alamatView = holder.alamat
@@ -46,7 +48,11 @@ class LokasiAdapter(private val obj : FaskesProperty): RecyclerView.Adapter<Loka
     }
 
     override fun getItemCount(): Int {
-        return obj.count_total
+        return if(obj.count_total > limit){
+            limit;
+        } else {
+            obj.count_total;
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnLongClickListener {
