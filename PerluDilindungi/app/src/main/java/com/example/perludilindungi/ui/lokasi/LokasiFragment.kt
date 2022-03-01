@@ -122,6 +122,19 @@ class LokasiFragment : Fragment() {
 
             var sorted: List<FaskesResults>?
 
+            val adaptertemp = LokasiAdapter(faskes)
+
+            adaptertemp.setOnItemClickListener(object : LokasiAdapter.ClickListener {
+                override fun onItemClick(position: Int, v: View?) {
+                    Timber.i("onItemClick position: $position")
+                }
+                override fun onItemLongClick(position: Int, v: View?) {
+                    Timber.i("onItemLongClick pos = $position")
+                }
+            })
+
+            binding.faskesList.adapter = adaptertemp
+
             if (ActivityCompat.checkSelfPermission(
                     requireContext(),
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -131,18 +144,6 @@ class LokasiFragment : Fragment() {
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 Timber.i("No Permission")
-                val adapter = LokasiAdapter(faskes)
-
-                adapter.setOnItemClickListener(object : LokasiAdapter.ClickListener {
-                    override fun onItemClick(position: Int, v: View?) {
-                        Timber.i("onItemClick position: $position")
-                    }
-                    override fun onItemLongClick(position: Int, v: View?) {
-                        Timber.i("onItemLongClick pos = $position")
-                    }
-                })
-
-                binding.faskesList.adapter = adapter
             } else{
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location->
@@ -175,19 +176,6 @@ class LokasiFragment : Fragment() {
                             binding.faskesList.adapter = adapter
                         } else{
                             Timber.i("Location null")
-                            val adapter = LokasiAdapter(faskes)
-
-
-                            adapter.setOnItemClickListener(object : LokasiAdapter.ClickListener {
-                                override fun onItemClick(position: Int, v: View?) {
-                                    Timber.i("onItemClick position: $position")
-                                }
-                                override fun onItemLongClick(position: Int, v: View?) {
-                                    Timber.i("onItemLongClick pos = $position")
-                                }
-                            })
-
-                            binding.faskesList.adapter = adapter
                         }
 
                     }
