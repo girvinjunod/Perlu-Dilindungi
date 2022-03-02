@@ -1,17 +1,23 @@
 package com.example.perludilindungi.ui.lokasi
 
+import android.R
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.webkit.WebView
+import android.widget.*
+import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.perludilindungi.databinding.FragmentLokasiBinding
 import com.example.perludilindungi.network.FaskesProperty
 import com.example.perludilindungi.network.LocationProperty
+//import com.example.perludilindungi.ui.detail.DetailActivity
 import timber.log.Timber
 
 
@@ -79,6 +85,15 @@ class LokasiFragment : Fragment() {
         }
 
 
+        val detailFaskesView : ConstraintLayout? = binding.detailFakses
+        val namaFaskesDetail : TextView? = binding.namaFaskesDetail
+        val alamatView: TextView? = binding.alamatDetail
+        val jenisView: TextView? = binding.jenisFaskesDetail
+        val telpView: TextView? = binding.noTelpDetail
+        val kodeView: TextView? = binding.kodeFaskesDetail
+        val statusView: TextView? = binding.statusFaskesDetail
+        val statusImageView : ImageView? = binding.statusImage
+
         var faskes: FaskesProperty
         lokasiViewModel.faskes.observe(viewLifecycleOwner) {
             faskes = it
@@ -87,6 +102,28 @@ class LokasiFragment : Fragment() {
             adapter.setOnItemClickListener(object : LokasiAdapter.ClickListener {
                 override fun onItemClick(position: Int, v: View?) {
                     Timber.i("onItemClick position: $position")
+                    detailFaskesView?.visibility = View.VISIBLE
+
+                    namaFaskesDetail?.text = faskes.data?.get(position)?.nama
+                    alamatView?.text = faskes.data?.get(position)?.alamat
+                    jenisView?.text = faskes.data?.get(position)?.jenis_faskes
+                    telpView?.text = "No telp: " + faskes.data?.get(position)?.telp
+                    kodeView?.text = "KODE: " + faskes.data?.get(position)?.kode
+
+//                    set warna jenis
+                    if (jenisView?.text.toString() == "PUSKESMAS"){
+                        jenisView?.setBackgroundColor(Color.parseColor("#ff80ff"))
+                    }else{
+                        jenisView?.setBackgroundColor(Color.parseColor("#8533ff"))
+                    }
+
+//                  set gambar
+                    if (faskes.data?.get(position)?.status.toString() == "Siap Vaksinasi") {
+                        statusImageView?.setImageResource(com.example.perludilindungi.R.drawable.ic_baseline_check_circle_outline_24)
+                    } else {
+                        statusImageView?.setImageResource(com.example.perludilindungi.R.drawable.ic_baseline_cancel_24)
+                    }
+                    statusView?.text = "Fasilitas ini\n" + faskes.data?.get(position)?.status?.uppercase()
                 }
                 override fun onItemLongClick(position: Int, v: View?) {
                     Timber.i("onItemLongClick pos = $position")
@@ -113,6 +150,20 @@ class LokasiFragment : Fragment() {
             lokasiViewModel.getApiFaskes(currProvinsi, currCity)
 
         }
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true)
+            {
+                override fun handleOnBackPressed() {
+                    if(detailFaskesView?.visibility.toString() == "0"){
+                        detailFaskesView?.visibility = View.INVISIBLE
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callback
+        )
 
 
 
