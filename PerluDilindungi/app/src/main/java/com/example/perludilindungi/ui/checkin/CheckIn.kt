@@ -1,73 +1,35 @@
 package com.example.perludilindungi.ui.checkin
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.perludilindungi.R
-import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.example.perludilindungi.MainActivity
-
-class CheckIn : AppCompatActivity() {
-
-
-//    private lateinit var appBarConfiguration: AppBarConfiguration
-//    private lateinit var binding: ActivityCheckInBinding
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        binding = ActivityCheckInBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-//
-//        setSupportActionBar(binding.toolbar)
-//
-//        val navController = findNavController(R.id.nav_host_fragment_content_check_in)
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//
-//        binding.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = findNavController(R.id.nav_host_fragment_content_check_in)
-//        return navController.navigateUp(appBarConfiguration)
-//                || super.onSupportNavigateUp()
-//    }
+import com.example.perludilindungi.R
 
 
-//      yang ini kebuka baru
-//    private lateinit var frame_layout_camera: FrameLayout
-//    private val button_reset: Button = findViewById(R.id.button_reset)
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.content_check_in)
-//
-//        val textView: TextView = findViewById(R.id.textView)
-//        val qrButton: ImageButton = findViewById(R.id.qr_button)
-//
-//
-//        qrButton.setOnClickListener({
-//            val intentIntegrator = IntentIntegrator(this)
-//            intentIntegrator.setDesiredBarcodeFormats(listOf(IntentIntegrator.QR_CODE))
-//            intentIntegrator.initiateScan()
-//        })
-//  }
+class CheckIn : AppCompatActivity(), SensorEventListener {
+
     private lateinit var codeScanner: CodeScanner
-
+    private var temperature = 0f
+    private lateinit var sensorManager: SensorManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_check_in)
+        var sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         setupPermissions()
         codeScanner()
@@ -115,11 +77,13 @@ class CheckIn : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
+        loadAmbientTemperature()
     }
 
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
+        unregisterAll()
     }
 
     private fun setupPermissions() {
@@ -159,6 +123,32 @@ class CheckIn : AppCompatActivity() {
     companion object {
         private const val CAMERA_REQ = 101
     }
+
+    private fun loadAmbientTemperature() {
+        var sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        val sensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        if (sensor != null) {
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST)
+        } else {
+            Toast.makeText(this, "No Ambient Temperature Sensor !", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun unregisterAll() {
+        sensorManager!!.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(sensorEvent: SensorEvent) {
+        val temperature_text: TextView = findViewById(R.id.temperature_text)
+        if (sensorEvent.values.size > 0) {
+            temperature = sensorEvent.values[0]
+            temperature_text.text = "$temperature°C"
+//            supportActionBar!!.setTitle(getString(R.string.app_name) + " : " + temperature)
+//            Toast.makeText(this, temperature.toString(), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, i: Int) {}
 
 
 }
