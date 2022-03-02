@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.perludilindungi.databinding.FragmentNewsBinding
@@ -80,6 +81,22 @@ class NewsFragment : Fragment() {
             })
             binding.newsList.adapter = adapter
         }
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (myWebView.visibility == View.VISIBLE) {
+                    Timber.i("Back to news")
+                    myWebView.visibility = View.INVISIBLE
+                    myWebView.loadUrl("")
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+
 
 
         Timber.i("onCreateView called")
