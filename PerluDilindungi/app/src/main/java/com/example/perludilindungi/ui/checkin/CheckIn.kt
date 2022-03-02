@@ -1,6 +1,5 @@
 package com.example.perludilindungi.ui.checkin
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
@@ -18,6 +17,16 @@ import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.example.perludilindungi.MainActivity
 import com.example.perludilindungi.R
+import com.example.perludilindungi.network.*
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 
 
 class CheckIn : AppCompatActivity(), SensorEventListener {
@@ -39,12 +48,45 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         })
+
+
     }
 
+
+    private fun rawJSON(text:String, tv_text: TextView) {
+        val service = PerluDilindungiApi
+        val JsonParser: JsonParser = JsonParser()
+        val jsonObject = JSONObject()
+        jsonObject.put("qrCode", text)
+        jsonObject.put("latitude", -6.1351855)
+        jsonObject.put("longitude", 11.0323457)
+        val jsonObjectString = jsonObject.toString()
+
+        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.retrofitService.getStatus(requestBody)
+
+            withContext(Dispatchers.Main){
+                if (response.isSuccessful){
+                    val gson = GsonBuilder().setPrettyPrinting().create()
+                    val prettyJson = gson.toJson(
+                        JsonParser.parse(response.body()?.string())
+                    )
+                    Log.d("Pretty Printed JSON :", prettyJson)
+                    tv_text.text = prettyJson
+                }
+            }
+//            tv_text.text = response.toString()
+
+        }
+    }
     private fun codeScanner() {
         val scn: CodeScannerView = findViewById(R.id.scn)
         val tv_text: TextView = findViewById(R.id.tv_text)
         codeScanner = CodeScanner(this, scn)
+
+
 
         codeScanner.apply {
             camera = CodeScanner.CAMERA_BACK
@@ -57,7 +99,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
-                    tv_text.text = it.text
+                    rawJSON(it.text, tv_text)
                 }
             }
 
@@ -151,5 +193,12 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {}
 
+//    private fun rawJSON() {
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://perludilindungi.herokuapp.com/")
+//            .build()
+//        val service = PerluDilindungiApi
+//        val result = service.retrofitService.getStatus()
+//    }
 
 }
