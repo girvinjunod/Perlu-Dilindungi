@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_PerluDilindungi)
         super.onCreate(savedInstanceState)
         Timber.plant(Timber.DebugTree())
         Timber.i("hi")

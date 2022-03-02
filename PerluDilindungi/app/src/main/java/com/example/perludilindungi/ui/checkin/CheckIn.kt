@@ -135,7 +135,8 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
     }
 
     private fun unregisterAll() {
-        sensorManager!!.unregisterListener(this)
+        var sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        sensorManager.unregisterListener(this)
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
