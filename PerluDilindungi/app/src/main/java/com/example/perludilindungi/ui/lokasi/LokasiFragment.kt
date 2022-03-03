@@ -17,6 +17,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.perludilindungi.databinding.FragmentLokasiBinding
 import com.example.perludilindungi.network.FaskesProperty
 import com.example.perludilindungi.network.LocationProperty
+import com.example.perludilindungi.room.Bookmark
+import com.example.perludilindungi.room.BookmarkDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 //import com.example.perludilindungi.ui.detail.DetailActivity
 import timber.log.Timber
 
@@ -84,7 +89,26 @@ class LokasiFragment : Fragment() {
             }
         }
 
+        spinnerCity.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                val item = parent.getItemAtPosition(pos)
+                if (item != null) {
+                    currCity = item.toString()
+                }
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
+
+        val searchBtn = binding.searchButton
+        searchBtn.setOnClickListener {
+            Timber.i("Search click")
+            lokasiViewModel.getApiFaskes(currProvinsi, currCity)
+
+        }
+
+
+//        <--------------------- DETAIL FASKES --------------------->
         val detailFaskesView : ConstraintLayout? = binding.detailFakses
         val namaFaskesDetail : TextView? = binding.namaFaskesDetail
         val alamatView: TextView? = binding.alamatDetail
@@ -93,6 +117,8 @@ class LokasiFragment : Fragment() {
         val kodeView: TextView? = binding.kodeFaskesDetail
         val statusView: TextView? = binding.statusFaskesDetail
         val statusImageView : ImageView? = binding.statusImage
+        val bookmarkBtn : Button? = binding.bookmarkButton
+        val googleBtn : Button? = binding.googleButton
 
         var faskes: FaskesProperty
         lokasiViewModel.faskes.observe(viewLifecycleOwner) {
@@ -124,6 +150,30 @@ class LokasiFragment : Fragment() {
                         statusImageView?.setImageResource(com.example.perludilindungi.R.drawable.ic_baseline_cancel_24)
                     }
                     statusView?.text = "Fasilitas ini\n" + faskes.data?.get(position)?.status?.uppercase()
+
+                    val db by lazy { context?.let { BookmarkDB(it) } }
+                    bookmarkBtn?.setOnClickListener{
+                        Timber.d("ADD FASKES %S", namaFaskesDetail?.text.toString())
+                        CoroutineScope(Dispatchers.IO).launch{
+                            db?.bookmarkDao()?.addBookmark(
+                                Bookmark(
+                                    0,
+                                    faskes.data?.get(position)?.nama.toString(),
+                                    faskes.data?.get(position)?.alamat.toString(),
+                                    faskes.data?.get(position)?.jenis_faskes.toString(),
+                                    faskes.data?.get(position)?.telp.toString(),
+                                    faskes.data?.get(position)?.kode.toString(),
+                                    faskes.data?.get(position)?.status.toString()
+                            ))
+                        }
+                        Timber.d("BOOKMARK ADDED")
+                    }
+
+                    googleBtn?.setOnClickListener{
+                        Timber.d("GOOGLE CLICKED")
+                        // TODO: ADD GOOGLE MAP LINK
+                    }
+
                 }
                 override fun onItemLongClick(position: Int, v: View?) {
                     Timber.i("onItemLongClick pos = $position")
@@ -133,23 +183,9 @@ class LokasiFragment : Fragment() {
             binding.faskesList.adapter = adapter
         }
 
-        spinnerCity.onItemSelectedListener = (object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
-                val item = parent.getItemAtPosition(pos)
-                if (item != null) {
-                    currCity = item.toString()
-                }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        })
+//        <--------------------- DETAIL FASKES --------------------->
 
-        val searchBtn = binding.searchButton
-        searchBtn.setOnClickListener {
-            Timber.i("Search click")
-            lokasiViewModel.getApiFaskes(currProvinsi, currCity)
-
-        }
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true)
