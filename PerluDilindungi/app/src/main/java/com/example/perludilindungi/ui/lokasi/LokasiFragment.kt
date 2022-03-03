@@ -1,6 +1,5 @@
 package com.example.perludilindungi.ui.lokasi
 
-import android.R
 import android.content.Intent
 import android.graphics.Color
 import android.Manifest
