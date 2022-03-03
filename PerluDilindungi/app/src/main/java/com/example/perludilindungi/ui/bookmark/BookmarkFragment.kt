@@ -67,7 +67,7 @@ class BookmarkFragment : Fragment() {
         val textBookmark : TextView = binding.textViewBookmark
         val bookmarkList : RecyclerView = binding.bookmarkList
 
-        bookmarkViewModel.response.observe(viewLifecycleOwner) {
+        bookmarkViewModel.response.observe(viewLifecycleOwner) { it ->
             obj = it
             val adapter = BookmarkAdapter(obj)
             adapter.setOnItemClickListener(object : BookmarkAdapter.ClickListener {
@@ -97,23 +97,21 @@ class BookmarkFragment : Fragment() {
                 }
                 statusView.text = "Fasilitas ini\n" + obj[position].statusFaskes.uppercase()
 
-                bookmarkBtn.setOnClickListener{
+                    bookmarkBtn.setBackgroundColor(Color.parseColor("#ff1a1a"))
 
-//                    TODO: DELETE DB
+                bookmarkBtn.setOnClickListener{
+                    val db by lazy { context?.let { BookmarkDB(it) } }
+                    db?.let { bookmarkViewModel.getDatabaseBookmark(it) }
                     Timber.d("DELETE FASKES %S", namaFaskesDetail?.text.toString())
-//                    CoroutineScope(Dispatchers.IO).launch{
-//                        db?.bookmarkDao()?.addBookmark(
-//                            Bookmark(
-//                                0,
-//                                obj[position].namaFaskes.toString(),
-//                                obj[position].alamatFaskes.toString(),
-//                                obj[position].jenisFaskes.toString(),
-//                                obj[position].telpFaskes.toString(),
-//                                obj[position].kodeFaskes.toString(),
-//                                obj[position].statusFaskes.toString()
-//                            ))
-//                    }
+                    CoroutineScope(Dispatchers.IO).launch{
+                        db?.bookmarkDao()?.deleteBookmark(obj[position])
+                    }
                     Timber.d("BOOKMARK DELETED")
+                    db?.let { bookmarkViewModel.getDatabaseBookmark(it) }
+                    detailFaskesView?.visibility = View.INVISIBLE
+                    textBookmark?.visibility = View.VISIBLE
+                    bookmarkList?.visibility = View.VISIBLE
+                    bookmarkBtn.setBackgroundColor(Color.parseColor("#ff80ff"))
                 }
 
                 googleBtn?.setOnClickListener{
