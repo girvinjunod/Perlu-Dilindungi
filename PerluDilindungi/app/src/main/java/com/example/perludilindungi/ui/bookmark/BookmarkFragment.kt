@@ -8,6 +8,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.perludilindungi.databinding.FragmentBookmarkBinding
+import com.example.perludilindungi.network.FaskesProperty
+import com.example.perludilindungi.room.Bookmark
+import com.example.perludilindungi.room.BookmarkDB
+import com.example.perludilindungi.ui.lokasi.LokasiAdapter
+import com.example.perludilindungi.ui.lokasi.LokasiViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class BookmarkFragment : Fragment() {
 
@@ -22,16 +31,27 @@ class BookmarkFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(BookmarkViewModel::class.java)
+        val lokasiViewModel =
+            ViewModelProvider(this).get(LokasiViewModel::class.java)
 
         _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+
+
+
+        val db by lazy { context?.let { BookmarkDB(it) } }
+        CoroutineScope(Dispatchers.IO).launch{
+            val bookmarks = db?.bookmarkDao()?.getBookmark()
+            if (bookmarks != null) {
+                for(item in bookmarks){
+                    Timber.i("GETBOOKMARKS: $item")
+                }
+            }
         }
+
+
         return root
     }
 

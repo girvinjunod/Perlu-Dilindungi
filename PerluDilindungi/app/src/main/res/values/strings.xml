@@ -7,4 +7,6 @@
     <string name="pilih_kota">Pilih Kota</string>
     <string name="pilih_provinsi">Pilih Provinsi</string>
     <string name="search">Search</string>
+    <string name="googleMap">Google Maps</string>
+    <string name="bookmark_faskes">Bookmark Faskes</string>
 </resources>
