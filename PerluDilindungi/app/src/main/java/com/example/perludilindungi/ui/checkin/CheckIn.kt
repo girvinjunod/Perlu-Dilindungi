@@ -264,7 +264,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
         if (sensor != null) {
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST)
         } else {
-            Toast.makeText(this, "No Ambient Temperature Sensor !", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "No temperature sensor found!", Toast.LENGTH_LONG).show()
         }
     }
 

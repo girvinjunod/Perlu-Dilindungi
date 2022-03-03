@@ -76,8 +76,9 @@
         app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scn"
-        app:layout_constraintVertical_bias="0.619"
-        app:srcCompat="@drawable/berhasil" />
+        app:layout_constraintVertical_bias="0.55"
+        app:srcCompat="@drawable/berhasil"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textView7"
@@ -108,7 +109,7 @@
         app:layout_constraintHorizontal_bias="0.284"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scn"
-        app:layout_constraintVertical_bias="0.579"
+        app:layout_constraintVertical_bias="0.52"
         app:srcCompat="@drawable/gagal"
         tools:visibility="visible" />
 
