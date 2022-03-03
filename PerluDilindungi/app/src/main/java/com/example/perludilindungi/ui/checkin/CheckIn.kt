@@ -1,23 +1,31 @@
 package com.example.perludilindungi.ui.checkin
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.location.component1
+import androidx.core.location.component2
 import com.budiyev.android.codescanner.*
 import com.example.perludilindungi.MainActivity
 import com.example.perludilindungi.R
 import com.example.perludilindungi.network.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +35,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.lang.Float.parseFloat
 
 
 class CheckIn : AppCompatActivity(), SensorEventListener {
@@ -34,8 +43,16 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
     private lateinit var codeScanner: CodeScanner
     private var temperature = 0f
     private lateinit var sensorManager: SensorManager
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var lastLocation: Location? = null
+    private var hasilLat: Float? = null
+    private var hasilLong: Float? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_check_in)
         var sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -49,39 +66,73 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
             startActivity(intent)
         })
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getLastLocation()
 
     }
 
 
     private fun rawJSON(text:String, tv_text: TextView) {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         val service = PerluDilindungiApi
         val JsonParser: JsonParser = JsonParser()
-        val jsonObject = JSONObject()
-        jsonObject.put("qrCode", text)
-        jsonObject.put("latitude", -6.1351855)
-        jsonObject.put("longitude", 11.0323457)
-        val jsonObjectString = jsonObject.toString()
 
-        val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+//        Log.d("lat", hasilLat.toString())
+//        Log.d("long", hasilLong.toString())
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.retrofitService.getStatus(requestBody)
-
-            withContext(Dispatchers.Main){
-                if (response.isSuccessful){
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parse(response.body()?.string())
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-                    tv_text.text = prettyJson
-                }
-            }
-//            tv_text.text = response.toString()
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
 
         }
+
+        fusedLocationClient.lastLocation!!.addOnCompleteListener(this) { task ->
+            if (task.isSuccessful && task.result != null) {
+                lastLocation = task.result
+                val jsonObject = JSONObject()
+                jsonObject.put("qrCode", text)
+                jsonObject.put("latitude", (lastLocation)!!.latitude)
+                jsonObject.put("longitude", (lastLocation)!!.latitude)
+                val jsonObjectString = jsonObject.toString()
+
+                val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = service.retrofitService.getStatus(requestBody)
+
+                    withContext(Dispatchers.Main){
+                        if (response.isSuccessful){
+                            val gson = GsonBuilder().setPrettyPrinting().create()
+                            val prettyJson = gson.toJson(
+                                JsonParser.parse(response.body()?.string())
+                            )
+                            Log.d("Pretty Printed JSON :", prettyJson)
+
+                            tv_text.text = prettyJson
+                        }
+                    }
+//                    tv_text.text = response.toString()
+
+                }
+
+
+            }
+            else {
+                Toast.makeText(this, "No location detected. Make sure location is enabled on the device.", Toast.LENGTH_LONG).show()
+            }
+        }
+
+
     }
     private fun codeScanner() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         val scn: CodeScannerView = findViewById(R.id.scn)
         val tv_text: TextView = findViewById(R.id.tv_text)
         codeScanner = CodeScanner(this, scn)
@@ -99,6 +150,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
 
             decodeCallback = DecodeCallback {
                 runOnUiThread {
+                    getLastLocation()
                     rawJSON(it.text, tv_text)
                 }
             }
@@ -158,12 +210,18 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
                     ).show()
                 }
             }
+            REQUEST_PERMISSIONS_REQUEST_CODE -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    getLastLocation()
+                }
+            }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {
         private const val CAMERA_REQ = 101
+        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     }
 
     private fun loadAmbientTemperature() {
@@ -193,12 +251,29 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {}
 
-//    private fun rawJSON() {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl("https://perludilindungi.herokuapp.com/")
-//            .build()
-//        val service = PerluDilindungiApi
-//        val result = service.retrofitService.getStatus()
-//    }
+    private fun getLastLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+        }
+        fusedLocationClient.lastLocation!!.addOnCompleteListener(this) { task ->
+            if (task.isSuccessful && task.result != null) {
+                lastLocation = task.result
+                hasilLat?.let{hasilLat = (lastLocation)!!.latitude.toFloat()}
+                hasilLong?.let{hasilLong = (lastLocation)!!.longitude.toFloat()}
+
+            }
+            else {
+                Toast.makeText(this, "No location detected. Make sure location is enabled on the device.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 }
