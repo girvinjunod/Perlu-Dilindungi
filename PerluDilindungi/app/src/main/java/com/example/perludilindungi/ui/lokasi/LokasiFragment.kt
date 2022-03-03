@@ -17,10 +17,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.perludilindungi.R
 import com.example.perludilindungi.databinding.FragmentLokasiBinding
 import com.example.perludilindungi.network.FaskesProperty
 import com.example.perludilindungi.network.FaskesResults
@@ -201,26 +203,51 @@ class LokasiFragment : Fragment() {
                     statusView?.text = "Fasilitas ini\n" + faskes.data?.get(position)?.status?.uppercase()
 
                     val db by lazy { context?.let { BookmarkDB(it) } }
-                    bookmarkBtn?.setOnClickListener{
-                        Timber.d("ADD FASKES %S", namaFaskesDetail?.text.toString())
-                        CoroutineScope(Dispatchers.IO).launch{
-                            db?.bookmarkDao()?.addBookmark(
-                                Bookmark(
-                                    0,
-                                    faskes.data?.get(position)?.nama.toString(),
-                                    faskes.data?.get(position)?.alamat.toString(),
-                                    faskes.data?.get(position)?.jenis_faskes.toString(),
-                                    faskes.data?.get(position)?.telp.toString(),
-                                    faskes.data?.get(position)?.kode.toString(),
-                                    faskes.data?.get(position)?.status.toString()
-                            ))
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val cekDB = db?.bookmarkDao()
+                            ?.checkBookmark(faskes.data?.get(position)?.kode.toString())
+
+                        if (cekDB != null) {
+                            Timber.i("ADA DI DB")
+                            bookmarkBtn?.setBackgroundColor(Color.parseColor("#4d4d4d"))
+                        }else{
+                            bookmarkBtn?.setBackgroundColor(Color.parseColor("#ff80ff"))
                         }
-                        Timber.d("BOOKMARK ADDED")
                     }
+                    bookmarkBtn?.setOnClickListener{
+                        CoroutineScope(Dispatchers.IO).launch{
+                            val cekDB = db?.bookmarkDao()
+                                ?.checkBookmark(faskes.data?.get(position)?.kode.toString())
+
+                            if (cekDB != null) {
+                                Timber.i("ADA DI DB")
+                                bookmarkBtn.setBackgroundColor(Color.parseColor("#4d4d4d"))
+                                bookmarkBtn.isActivated = false
+                            }else{
+                                db?.bookmarkDao()?.addBookmark(
+                                    Bookmark(
+                                        0,
+                                        faskes.data?.get(position)?.nama.toString(),
+                                        faskes.data?.get(position)?.alamat.toString(),
+                                        faskes.data?.get(position)?.jenis_faskes.toString(),
+                                        faskes.data?.get(position)?.telp.toString(),
+                                        faskes.data?.get(position)?.kode.toString(),
+                                        faskes.data?.get(position)?.status.toString(),
+                                        faskes.data?.get(position)?.latitude.toString(),
+                                        faskes.data?.get(position)?.longitude .toString()
+                                    ))
+                                Timber.d("BOOKMARK ADDED")
+                                bookmarkBtn.setBackgroundColor(Color.parseColor("#4d4d4d"))
+                                bookmarkBtn.isActivated = false
+                            }
+
+                        }
+                    }
+
 
                     googleBtn?.setOnClickListener{
                         Timber.d("GOOGLE CLICKED")
-                        // TODO: ADD GOOGLE MAP LINK
                         val sourceLatitude = faskes.data?.get(position)?.latitude.toString()
                         var sourceLongitude = faskes.data?.get(position)?.longitude.toString()
 //                        Log.d("sourceLatitude",sourceLatitude)
@@ -308,7 +335,7 @@ class LokasiFragment : Fragment() {
 //        <--------------------- DETAIL FASKES --------------------->
 
 
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+        activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if(detailFaskesView?.visibility.toString() == "0"){
                     detailFaskesView?.visibility = View.INVISIBLE

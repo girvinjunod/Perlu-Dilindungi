@@ -13,5 +13,7 @@ data class Bookmark (
     val jenisFaskes: String,
     val telpFaskes: String,
     val kodeFaskes: String,
-    val statusFaskes: String
+    val statusFaskes: String,
+    val latitude: String,
+    val longitude : String
 )

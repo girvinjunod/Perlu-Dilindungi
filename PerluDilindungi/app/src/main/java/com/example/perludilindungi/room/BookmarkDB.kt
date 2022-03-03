@@ -28,7 +28,7 @@ abstract class BookmarkDB : RoomDatabase(){
             context.applicationContext,
             BookmarkDB::class.java,
             "bookmarkData.db"
-        ).build()
+        ).allowMainThreadQueries().build()
 
     }
 }
