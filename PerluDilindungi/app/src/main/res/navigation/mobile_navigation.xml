@@ -12,13 +12,13 @@
         tools:layout="@layout/fragment_news" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_lokasi"
         android:name="com.example.perludilindungi.ui.lokasi.LokasiFragment"
         android:label="@string/title_lokasi"
         tools:layout="@layout/fragment_lokasi" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_bookmark"
         android:name="com.example.perludilindungi.ui.bookmark.BookmarkFragment"
         android:label="@string/title_bookmark"
         tools:layout="@layout/fragment_bookmark" />

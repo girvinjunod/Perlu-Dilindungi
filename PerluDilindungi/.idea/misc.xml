@@ -3,13 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/drawable/bg_gradient.xml" value="0.2265" />
+        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/drawable/splash_background.xml" value="0.2265" />
+        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/drawable/splash_screen.xml" value="0.2265" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout-land/fragment_lokasi.xml" value="0.25" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout-land/list_item_lokasi.xml" value="0.264" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/activity_main.xml" value="0.4" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/fragment_dashboard.xml" value="0.22826086956521738" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/fragment_lokasi.xml" value="0.25" />
-        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/fragment_news.xml" value="0.1" />
+        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/fragment_news.xml" value="0.264" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/list_item_lokasi.xml" value="0.264" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/list_item_news.xml" value="0.4" />
         <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/layout/news_view.xml" value="0.22826086956521738" />
@@ -31,6 +34,7 @@
         <entry key="..\:/Users/ashiapp/Desktop/if3210-2022-android-24/PerluDilindungi/app/src/main/res/layout/list_item_lokasi.xml" value="0.25" />
         <entry key="..\:/Users/ashiapp/Desktop/if3210-2022-android-24/PerluDilindungi/app/src/main/res/layout/list_item_news.xml" value="0.22" />
         <entry key="..\:/Users/ashiapp/Desktop/if3210-2022-android-24/PerluDilindungi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.278125" />
+        <entry key="..\:/Coding/pbd/tubes1/PerluDilindungi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.264" />
       </map>
     </option>
   </component>

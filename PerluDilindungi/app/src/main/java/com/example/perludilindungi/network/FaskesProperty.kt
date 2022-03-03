@@ -4,7 +4,7 @@ data class FaskesProperty(
     val success: Boolean,
     val message: String,
     val count_total: Int,
-    val data : List<FaskesResults>?
+    var data : List<FaskesResults>?
 )
 
 data class FaskesResults(
