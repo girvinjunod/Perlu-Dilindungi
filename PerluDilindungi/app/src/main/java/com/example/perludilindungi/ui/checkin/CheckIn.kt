@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -72,7 +73,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
     }
 
 
-    private fun rawJSON(text:String, tv_text: TextView) {
+    private fun rawJSON(text:String) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val service = PerluDilindungiApi
@@ -114,7 +115,40 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
                             )
                             Log.d("Pretty Printed JSON :", prettyJson)
 
-                            tv_text.text = prettyJson
+//                            tv_text.text = prettyJson
+                            val foos = Response(prettyJson)
+                            val hasildata = foos.getJSONObject("data").getString("userStatus")
+//                            tv_text.text = hasildata.toString()
+
+                            if (hasildata.toString() == "green" || hasildata.toString() == "yellow") {
+                                val gambarstatus: ImageView = findViewById(R.id.imageView2)
+                                gambarstatus.setVisibility(View.VISIBLE)
+                                val tulisanberhasil: TextView = findViewById(R.id.textView7)
+                                tulisanberhasil.setVisibility(View.VISIBLE)
+
+                                val gambarstatusgagal: ImageView = findViewById(R.id.imageView3)
+                                gambarstatusgagal.setVisibility(View.GONE)
+                                val tulisangagal: TextView = findViewById(R.id.textView8)
+                                tulisangagal.setVisibility(View.GONE)
+                                val reasongagal: TextView = findViewById(R.id.textView9)
+                                reasongagal.setVisibility(View.GONE)
+                            }
+
+                            else if (hasildata.toString() == "red" || hasildata.toString() == "black") {
+                                val gambarstatus: ImageView = findViewById(R.id.imageView2)
+                                gambarstatus.setVisibility(View.GONE)
+                                val tulisanberhasil: TextView = findViewById(R.id.textView7)
+                                tulisanberhasil.setVisibility(View.GONE)
+
+                                val gambarstatusgagal: ImageView = findViewById(R.id.imageView3)
+                                gambarstatusgagal.setVisibility(View.VISIBLE)
+                                val tulisangagal: TextView = findViewById(R.id.textView8)
+                                tulisangagal.setVisibility(View.VISIBLE)
+                                val reasongagal: TextView = findViewById(R.id.textView9)
+                                reasongagal.text = foos.getJSONObject("data").getString("reason").toString()
+                                reasongagal.setVisibility(View.VISIBLE)
+                            }
+
                         }
                     }
 //                    tv_text.text = response.toString()
@@ -134,7 +168,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val scn: CodeScannerView = findViewById(R.id.scn)
-        val tv_text: TextView = findViewById(R.id.tv_text)
+
         codeScanner = CodeScanner(this, scn)
 
 
@@ -151,7 +185,7 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     getLastLocation()
-                    rawJSON(it.text, tv_text)
+                    rawJSON(it.text)
                 }
             }
 
@@ -250,6 +284,18 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, i: Int) {}
+
+    class Response(json: String) : JSONObject(json) {
+        val type: String? = this.optString("type")
+        val data = this.optJSONArray("data")
+            ?.let { 0.until(it.length()).map { i -> it.optJSONObject(i) } } // returns an array of JSONObject
+            ?.map { Foo(it.toString()) } // transforms each JSONObject of the array into Foo
+    }
+
+    class Foo(json: String) : JSONObject(json) {
+        val userStatus = this.optString("userStatus")
+        val reason: String? = this.optString("reason")
+    }
 
     private fun getLastLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
