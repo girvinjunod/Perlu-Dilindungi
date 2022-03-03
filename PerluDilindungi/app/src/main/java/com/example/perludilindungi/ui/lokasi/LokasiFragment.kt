@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.perludilindungi.databinding.FragmentLokasiBinding
 import com.example.perludilindungi.network.FaskesProperty
 import com.example.perludilindungi.network.FaskesResults
@@ -159,6 +160,8 @@ class LokasiFragment : Fragment() {
         val statusImageView : ImageView? = binding.statusImage
         val bookmarkBtn : Button? = binding.bookmarkButton
         val googleBtn : Button? = binding.googleButton
+        val faskesLayout : ConstraintLayout? = binding.constraintLayout
+        val faskesList : RecyclerView? = binding.faskesList
 
         var faskes: FaskesProperty
         lokasiViewModel.faskes.observe(viewLifecycleOwner) { res ->
@@ -173,6 +176,8 @@ class LokasiFragment : Fragment() {
                 override fun onItemClick(position: Int, v: View?) {
                     Timber.i("onItemClick position: $position")
                     detailFaskesView?.visibility = View.VISIBLE
+                    faskesLayout?.visibility = View.INVISIBLE
+                    faskesList?.visibility = View.INVISIBLE
 
                     namaFaskesDetail?.text = faskes.data?.get(position)?.nama
                     alamatView?.text = faskes.data?.get(position)?.alamat
@@ -303,19 +308,18 @@ class LokasiFragment : Fragment() {
 //        <--------------------- DETAIL FASKES --------------------->
 
 
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true)
-            {
-                override fun handleOnBackPressed() {
-                    if(detailFaskesView?.visibility.toString() == "0"){
-                        detailFaskesView?.visibility = View.INVISIBLE
-                    }
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(detailFaskesView?.visibility.toString() == "0"){
+                    detailFaskesView?.visibility = View.INVISIBLE
+                    faskesLayout?.visibility = View.VISIBLE
+                    faskesList?.visibility = View.VISIBLE
+                }else{
+                    isEnabled = false
+                    activity?.onBackPressed()
                 }
             }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            callback
-        )
+        })
 
 
 
