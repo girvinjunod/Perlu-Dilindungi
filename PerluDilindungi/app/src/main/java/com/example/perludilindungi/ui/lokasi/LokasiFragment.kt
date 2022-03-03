@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ import kotlinx.coroutines.launch
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import timber.log.Timber
+import kotlin.collections.ArrayList
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
@@ -214,6 +216,16 @@ class LokasiFragment : Fragment() {
                     googleBtn?.setOnClickListener{
                         Timber.d("GOOGLE CLICKED")
                         // TODO: ADD GOOGLE MAP LINK
+                        val sourceLatitude = faskes.data?.get(position)?.latitude.toString()
+                        var sourceLongitude = faskes.data?.get(position)?.longitude.toString()
+//                        Log.d("sourceLatitude",sourceLatitude)
+//                        Log.d("sourceLongitude",sourceLongitude)
+                        val completeLoc = "geo:"+sourceLatitude+","+sourceLongitude+"?q="+sourceLatitude+","+sourceLongitude+"("+faskes.data?.get(position)?.nama.toString()+")"
+//                        Log.d("completeLoc", completeLoc)
+                        val gmmIntentUri = Uri.parse(completeLoc)
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        startActivity(mapIntent)
                     }
 
                 }
