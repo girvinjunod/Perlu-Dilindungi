@@ -16,12 +16,15 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/search_border"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/faskes_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
 
         <TextView
             android:id="@+id/textView"
@@ -35,29 +38,59 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
-            android:id="@+id/spinnerProvinsi"
-            android:layout_width="280dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+        <LinearLayout
+            android:id="@+id/layoutProvinsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
-            android:contentDescription="@string/pilih_provinsi"
+            android:background="@drawable/layout_border"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <Spinner
+                android:id="@+id/spinnerProvinsi"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:contentDescription="@string/pilih_provinsi"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+
+        </LinearLayout>
+
+
+        <!--        <Spinner-->
+        <!--            android:id="@+id/spinnerProvinsi"-->
+        <!--            android:layout_width="280dp"-->
+        <!--            android:layout_height="48dp"-->
+        <!--            android:layout_marginStart="24dp"-->
+        <!--            android:layout_marginEnd="24dp"-->
+        <!--            android:layout_marginBottom="16dp"-->
+        <!--            android:contentDescription="@string/pilih_provinsi"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/textView3"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+        <!--            android:background="@drawable/layout_border"-->
+        <!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="@string/pilih_provinsi"
-            app:layout_constraintBottom_toTopOf="@+id/spinnerProvinsi"
+            app:layout_constraintBottom_toTopOf="@+id/layoutProvinsi"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -65,28 +98,57 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:text="@string/pilih_kota"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerProvinsi" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutProvinsi" />
 
-        <Spinner
-            android:id="@+id/spinnerKota"
-            android:layout_width="280dp"
+        <LinearLayout
+            android:id="@+id/layoutKota"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="17dp"
-            android:contentDescription="@string/pilih_kota"
-            android:minHeight="48dp"
+            android:background="@drawable/layout_border"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/searchButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="DuplicateSpeakableTextCheck" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <Spinner
+                android:id="@+id/spinnerKota"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:contentDescription="@string/pilih_kota"
+
+                android:minHeight="48dp"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
+
+        </LinearLayout>
+
+        <!--        <Spinner-->
+        <!--            android:id="@+id/spinnerKota"-->
+        <!--            android:layout_width="280dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="24dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="24dp"-->
+        <!--            android:layout_marginBottom="17dp"-->
+        <!--            android:contentDescription="@string/pilih_kota"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/searchButton"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView3"-->
+        <!--            app:layout_constraintVertical_bias="0.0"-->
+        <!--            android:background="@drawable/layout_border"-->
+        <!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
 
         <Button
             android:id="@+id/searchButton"
@@ -101,7 +163,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerKota" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutKota" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
