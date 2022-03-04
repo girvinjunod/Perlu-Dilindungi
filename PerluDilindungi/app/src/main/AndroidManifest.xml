@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.perludilindungi">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PerluDilindungi">
-
-    <activity
+        <activity
+            android:name=".ui.checkin.CheckIn"
+            android:exported="false"
+            android:label="@string/title_activity_check_in"
+            android:theme="@style/Theme.PerluDilindungi.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/splashScreenTheme"
@@ -24,4 +32,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
