@@ -1,8 +1,10 @@
 package com.example.perludilindungi
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -10,12 +12,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.perludilindungi.databinding.ActivityMainBinding
+import com.example.perludilindungi.ui.checkin.CheckIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import timber.log.Timber
+import kotlin.reflect.jvm.internal.impl.util.Check
 
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var checkinButton: FloatingActionButton
 
     private lateinit var binding: ActivityMainBinding
 
@@ -56,12 +61,18 @@ class MainActivity : AppCompatActivity() {
             }
             }
         }
+        checkinButton = findViewById(R.id.checkinbutton);
+        checkinButton.setOnClickListener{
+            val intent = Intent(this, CheckIn::class.java)
+            startActivity(intent)
+        }
 
         locationPermissionRequest.launch(arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION))
 
     }
+
     override fun onStart() {
         super.onStart()
 
