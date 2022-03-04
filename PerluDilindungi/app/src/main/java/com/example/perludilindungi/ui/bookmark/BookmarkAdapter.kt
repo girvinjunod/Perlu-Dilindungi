@@ -1,5 +1,6 @@
 package com.example.perludilindungi.ui.bookmark
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,16 @@ class BookmarkAdapter(private val bookmarks: List<Bookmark>) : RecyclerView.Adap
             jenisView.text = bookmark.jenisFaskes
             telpView.text = bookmark.telpFaskes
             kodeView.text = "KODE:" + bookmark.kodeFaskes
+            if (jenisView.text.toString() == "PUSKESMAS"){
+                jenisView.setBackgroundColor(Color.parseColor("#ff80ff"))
+                jenisView.setTextColor(Color.WHITE)
+            }else if (jenisView.text.toString() == "RUMAH SAKIT"){
+                jenisView.setBackgroundColor(Color.parseColor("#00DDFF"))
+                jenisView.setTextColor(Color.WHITE)
+            } else if (jenisView.text.toString() == "KLINIK"){
+                jenisView.setBackgroundColor(Color.parseColor("#FFF800"))
+                jenisView.setTextColor(Color.WHITE)
+            }
         }
     }
 

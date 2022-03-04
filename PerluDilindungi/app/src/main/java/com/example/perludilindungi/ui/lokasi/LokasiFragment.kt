@@ -221,9 +221,12 @@ class LokasiFragment : Fragment() {
 //                    set warna jenis
                                     if (jenisView?.text.toString() == "PUSKESMAS"){
                                         jenisView?.setBackgroundColor(Color.parseColor("#ff80ff"))
-                                    }else{
-                                        jenisView?.setBackgroundColor(Color.parseColor("#8533ff"))
+                                    }else if (jenisView?.text.toString() == "RUMAH SAKIT"){
+                                        jenisView?.setBackgroundColor(Color.parseColor("#00DDFF"))
+                                    } else if (jenisView?.text.toString() == "KLINIK"){
+                                        jenisView?.setBackgroundColor(Color.parseColor("#FFF800"))
                                     }
+
 
 //                  set gambar
                                     if (faskes.data?.get(position)?.status.toString() == "Siap Vaksinasi") {

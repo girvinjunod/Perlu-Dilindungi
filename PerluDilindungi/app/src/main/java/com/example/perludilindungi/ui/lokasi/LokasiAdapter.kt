@@ -1,5 +1,6 @@
 package com.example.perludilindungi.ui.lokasi
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,16 @@ class LokasiAdapter(private val obj : FaskesProperty): RecyclerView.Adapter<Loka
             jenisView.text = data.jenis_faskes
             telpView.text = data.telp
             kodeView.text = "KODE:" + data.kode
+            if (jenisView.text.toString() == "PUSKESMAS"){
+                jenisView.setBackgroundColor(Color.parseColor("#ff80ff"))
+                jenisView.setTextColor(Color.WHITE)
+            }else if (jenisView.text.toString() == "RUMAH SAKIT"){
+                jenisView.setBackgroundColor(Color.parseColor("#00DDFF"))
+                jenisView.setTextColor(Color.WHITE)
+            } else if (jenisView.text.toString() == "KLINIK"){
+                jenisView.setBackgroundColor(Color.parseColor("#FFF800"))
+                jenisView.setTextColor(Color.WHITE)
+            }
         }
 
     }

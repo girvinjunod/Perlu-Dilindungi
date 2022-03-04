@@ -42,6 +42,7 @@
         android:contentDescription="@string/checkin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/outline_qr_code_20" />
+        app:srcCompat="@drawable/outline_qr_code_20"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
