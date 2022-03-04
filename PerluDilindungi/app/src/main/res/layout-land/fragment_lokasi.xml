@@ -30,10 +30,10 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:background="@drawable/search_border_horizontal"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/search_border_horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -48,19 +48,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <Spinner-->
-<!--            android:id="@+id/spinnerProvinsi"-->
-<!--            android:layout_width="280dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:layout_marginStart="24dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:contentDescription="@string/pilih_provinsi"-->
-<!--            app:layout_constraintBottom_toTopOf="@+id/textView3"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView2"-->
-<!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
+        <!--        <Spinner-->
+        <!--            android:id="@+id/spinnerProvinsi"-->
+        <!--            android:layout_width="280dp"-->
+        <!--            android:layout_height="48dp"-->
+        <!--            android:layout_marginStart="24dp"-->
+        <!--            android:layout_marginEnd="24dp"-->
+        <!--            android:layout_marginBottom="16dp"-->
+        <!--            android:contentDescription="@string/pilih_provinsi"-->
+        <!--            app:layout_constraintBottom_toTopOf="@+id/textView3"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+        <!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
         <LinearLayout
             android:id="@+id/layoutProvinsi"
             android:layout_width="280dp"
@@ -112,19 +112,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutProvinsi" />
 
-<!--        <Spinner-->
-<!--            android:id="@+id/spinnerKota"-->
-<!--            android:layout_width="280dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="24dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:contentDescription="@string/pilih_kota"-->
-<!--            android:minHeight="48dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/textView3"-->
-<!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
+        <!--        <Spinner-->
+        <!--            android:id="@+id/spinnerKota"-->
+        <!--            android:layout_width="280dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginStart="24dp"-->
+        <!--            android:layout_marginTop="8dp"-->
+        <!--            android:layout_marginEnd="24dp"-->
+        <!--            android:contentDescription="@string/pilih_kota"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView3"-->
+        <!--            tools:ignore="DuplicateSpeakableTextCheck" />-->
         <LinearLayout
             android:id="@+id/layoutKota"
             android:layout_width="280dp"
@@ -167,6 +167,132 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutKota" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detailFakses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/namaFaskesDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nama Faskes" />
+
+        <TextView
+            android:id="@+id/alamatDetail"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kodeFaskesDetail"
+            tools:text="alamat" />
+
+        <TextView
+            android:id="@+id/noTelpDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alamatDetail"
+            tools:text="Nomor Telp" />
+
+        <TextView
+            android:id="@+id/kodeFaskesDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/namaFaskesDetail"
+            tools:text="Kode" />
+
+        <TextView
+            android:id="@+id/jenisFaskesDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toTopOf="@+id/alamatDetail"
+            app:layout_constraintStart_toEndOf="@+id/alamatDetail"
+            app:layout_constraintTop_toBottomOf="@+id/namaFaskesDetail"
+            app:layout_constraintVertical_bias="0.52"
+            tools:text="Jenis Faskes" />
+
+        <ImageView
+            android:id="@+id/status_image"
+            android:layout_width="135dp"
+            android:layout_height="137dp"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="64dp"
+            android:contentDescription="@string/title_news"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/statusFaskesDetail"
+            android:layout_width="135dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="64dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status_image"
+            tools:text="Status Faskes" />
+
+        <Button
+            android:id="@+id/googleButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:backgroundTint="#8533ff"
+            android:text="@string/googleMap"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.84000003" />
+
+        <Button
+            android:id="@+id/bookmarkButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:backgroundTint="#ff80ff"
+            android:text="@string/title_bookmark"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/googleButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.834" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
