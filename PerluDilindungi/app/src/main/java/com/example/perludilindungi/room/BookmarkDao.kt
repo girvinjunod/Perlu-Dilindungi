@@ -12,4 +12,7 @@ interface BookmarkDao {
 
     @Query("SELECT * FROM bookmark")
     fun getBookmark(): List<Bookmark>
+
+    @Query("SELECT * FROM bookmark WHERE kodeFaskes IN (:bookmarkID)")
+    fun checkBookmark(bookmarkID : String): Bookmark
 }
