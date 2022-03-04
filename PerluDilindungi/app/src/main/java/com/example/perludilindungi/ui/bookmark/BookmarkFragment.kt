@@ -14,18 +14,17 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.perludilindungi.R
 import com.example.perludilindungi.databinding.FragmentBookmarkBinding
 import com.example.perludilindungi.room.Bookmark
 import com.example.perludilindungi.room.BookmarkDB
-import com.example.perludilindungi.ui.lokasi.LokasiViewModel
-import com.example.perludilindungi.ui.news.NewsAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
+
 
 class BookmarkFragment : Fragment() {
 
@@ -35,7 +34,6 @@ class BookmarkFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var bookmarkAdapter: BookmarkAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -100,21 +98,21 @@ class BookmarkFragment : Fragment() {
                     bookmarkBtn.setBackgroundColor(Color.parseColor("#ff1a1a"))
 
                 bookmarkBtn.setOnClickListener{
-                    val db by lazy { context?.let { BookmarkDB(it) } }
                     db?.let { bookmarkViewModel.getDatabaseBookmark(it) }
-                    Timber.d("DELETE FASKES %S", namaFaskesDetail?.text.toString())
+                    Timber.d("DELETE FASKES %S", namaFaskesDetail.text.toString())
                     CoroutineScope(Dispatchers.IO).launch{
                         db?.bookmarkDao()?.deleteBookmark(obj[position])
                     }
                     Timber.d("BOOKMARK DELETED")
-                    db?.let { bookmarkViewModel.getDatabaseBookmark(it) }
-                    detailFaskesView?.visibility = View.INVISIBLE
-                    textBookmark?.visibility = View.VISIBLE
-                    bookmarkList?.visibility = View.VISIBLE
                     bookmarkBtn.setBackgroundColor(Color.parseColor("#ff80ff"))
+                    val navController = findNavController()
+                    navController.run {
+                        popBackStack()
+                        navigate(R.id.navigation_bookmark)
+                    }
                 }
 
-                googleBtn?.setOnClickListener{
+                googleBtn.setOnClickListener{
                     Timber.d("GOOGLE CLICKED")
                     val sourceLatitude = obj[position].latitude.toString()
                     var sourceLongitude = obj[position].longitude.toString()
@@ -138,10 +136,10 @@ class BookmarkFragment : Fragment() {
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if(detailFaskesView?.visibility.toString() == "0"){
-                    detailFaskesView?.visibility = View.INVISIBLE
-                    textBookmark?.visibility = View.VISIBLE
-                    bookmarkList?.visibility = View.VISIBLE
+                if(detailFaskesView.visibility.toString() == "0"){
+                    detailFaskesView.visibility = View.INVISIBLE
+                    textBookmark.visibility = View.VISIBLE
+                    bookmarkList.visibility = View.VISIBLE
                 }else{
                     isEnabled = false
                     activity?.onBackPressed()
@@ -152,14 +150,6 @@ class BookmarkFragment : Fragment() {
         return root
     }
 
-    private fun setupRecyclerView(){
-        val bookmark_list = binding.bookmarkList
-        bookmarkAdapter = BookmarkAdapter(arrayListOf())
-        bookmark_list.apply{
-            layoutManager = LinearLayoutManager(context)
-            adapter = bookmarkAdapter
-        }
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
