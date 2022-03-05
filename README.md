@@ -25,7 +25,44 @@ Saat pengguna ingin melakukan check-in, pengguna dapat menekan tombol scanner ya
 | Coroutines | Digunakan untuk asynchronus database|
 
 # Screenshot Aplikasi
-Screenshot aplikasi (dimasukkan dalam folder screenshot)
+1. Splash Screen
+
+![Splash Screen](./screenshot/splashScreen.png)
+
+2. Halaman Daftar Berita
+
+![Daftar Berita](./screenshot/NewsList.png)
+
+3. Halaman Webview Berita
+
+![Web View](./screenshot/WebViewBerita.png)
+
+4. Halaman Daftar Faskes
+
+![Daftar Faskes Kosong](./screenshot/CariFaskesEmpty.png)
+![Daftar Faskes 1](./screenshot/CariFaskes1.png)
+![Daftar Faskes 2](./screenshot/CariFaskes2.png)
+
+5. Halaman Detail Faskes
+
+![Detail Faskes 1](./screenshot/DetailFaskes1.png)
+![Detail Faskes 2](./screenshot/DetailFaskes2.png)
+![Google Map](./screenshot/GoogleMap.png)
+
+6. Halaman Bookmark
+
+![Bookmark 1](./screenshot/Bookmark1.png)
+![Bookmark 2](./screenshot/Bookmark2.png)
+![Detail Bookmark](./screenshot/DetailBookmark.png)
+
+8. Halaman Check-In
+
+![CheckIn](./screenshot/checkIn.png)
+![CheckIn Green](./screenshot/checkInGreen.png)
+![CheckIn Yellow](./screenshot/checkInYellow.png)
+![CheckIn Red](./screenshot/checkInRed.png)
+![CheckIn Black](./screenshot/checkInBlack.png)
+
 # Pembagian Kerja
 Bryan Rinaldo - 13519103
 - Menampilkan Detail Informasi Faskes
