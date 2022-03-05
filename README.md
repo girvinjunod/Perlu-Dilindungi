@@ -53,7 +53,6 @@ Saat pengguna ingin melakukan check-in, pengguna dapat menekan tombol scanner ya
 
 ![Bookmark 1](./screenshot/Bookmark1.png)
 ![Bookmark 2](./screenshot/Bookmark2.png)
-![Detail Bookmark](./screenshot/DetailBookmark.png)
 
 8. Halaman Check-In
 
