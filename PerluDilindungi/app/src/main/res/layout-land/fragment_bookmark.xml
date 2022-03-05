@@ -151,7 +151,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="64dp"
-                android:backgroundTint="#ff80ff"
+                android:backgroundTint="#FF0000"
                 android:text="@string/title_bookmark"
                 android:textColor="#ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
