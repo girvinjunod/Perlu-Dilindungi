@@ -27,7 +27,12 @@ class NewsAdapter (private val obj : NewsProperty): RecyclerView.Adapter<NewsAda
         val dateView = holder.date
         val thumbnailView = holder.thumbnail
         headlineView.text = obj.results?.get(position)?.title
-        dateView.text = obj.results?.get(position)?.pubDate
+        val idx= obj.results?.get(position)?.pubDate?.indexOf(":")
+        if (idx != null) {
+            dateView.text = obj.results?.get(position)?.pubDate?.subSequence(0, idx-3) ?: obj.results?.get(position)?.pubDate
+        } else{
+            dateView.text  =obj.results?.get(position)?.pubDate
+        }
         val url : Uri = Uri.parse(obj.results?.get(position)?.image?.imageUrl)
         Timber.i(url.toString())
         Picasso.get().load(url).into(thumbnailView)
