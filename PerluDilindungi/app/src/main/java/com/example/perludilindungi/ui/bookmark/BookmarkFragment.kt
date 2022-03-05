@@ -86,7 +86,7 @@ class BookmarkFragment : Fragment() {
                 }else if (jenisView.text.toString() == "RUMAH SAKIT"){
                     jenisView.setBackgroundColor(Color.parseColor("#00DDFF"))
                 } else if (jenisView.text.toString() == "KLINIK"){
-                        jenisView.setBackgroundColor(Color.parseColor("#FFF800"))
+                        jenisView.setBackgroundColor(Color.parseColor("#FFA900"))
                 }
 
 //                  set gambar

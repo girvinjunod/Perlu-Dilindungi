@@ -3,6 +3,7 @@ package com.example.perludilindungi.ui.checkin
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.*
 import android.location.Location
 import android.os.Bundle
@@ -111,6 +112,9 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
 //                            tv_text.text = hasildata.toString()
 
                                 if (hasildata.toString() == "green" || hasildata.toString() == "yellow") {
+                                    val kotakstatus: TextView = findViewById(R.id.kotakstatus)
+                                    kotakstatus.setVisibility(View.GONE)
+
                                     val gambarstatus: ImageView = findViewById(R.id.imageView2)
                                     gambarstatus.setVisibility(View.VISIBLE)
                                     val tulisanberhasil: TextView = findViewById(R.id.textView7)
@@ -122,9 +126,24 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
                                     tulisangagal.setVisibility(View.GONE)
                                     val reasongagal: TextView = findViewById(R.id.textView9)
                                     reasongagal.setVisibility(View.GONE)
+                                    if (hasildata.toString() == "green") {
+                                        kotakstatus.setVisibility(View.VISIBLE)
+                                        kotakstatus.text = "Your status is GREEN"
+                                        kotakstatus.setBackgroundColor(Color.parseColor("#34AB40"))
+                                        kotakstatus.setTextColor(Color.WHITE)
+                                    }
+                                    else if (hasildata.toString() == "yellow") {
+                                        kotakstatus.setVisibility(View.VISIBLE)
+                                        kotakstatus.text = "Your status is YELLOW"
+                                        kotakstatus.setBackgroundColor(Color.YELLOW)
+                                        kotakstatus.setTextColor(Color.BLACK)
+                                    }
                                 }
 
                                 else if (hasildata.toString() == "red" || hasildata.toString() == "black") {
+                                    val kotakstatus: TextView = findViewById(R.id.kotakstatus)
+                                    kotakstatus.setVisibility(View.GONE)
+
                                     val gambarstatus: ImageView = findViewById(R.id.imageView2)
                                     gambarstatus.setVisibility(View.GONE)
                                     val tulisanberhasil: TextView = findViewById(R.id.textView7)
@@ -137,7 +156,23 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
                                     val reasongagal: TextView = findViewById(R.id.textView9)
                                     reasongagal.text = foos.getJSONObject("data").getString("reason").toString()
                                     reasongagal.setVisibility(View.VISIBLE)
+
+                                    if (hasildata.toString() == "red") {
+
+                                        kotakstatus.setVisibility(View.VISIBLE)
+                                        kotakstatus.text = "Your status is RED"
+                                        kotakstatus.setBackgroundColor(Color.RED)
+                                        kotakstatus.setTextColor(Color.WHITE)
+                                    }
+                                    if (hasildata.toString() == "black") {
+                                        kotakstatus.setVisibility(View.VISIBLE)
+                                        kotakstatus.text = "Your status is BLACK"
+                                        kotakstatus.setBackgroundColor(Color.BLACK)
+                                        kotakstatus.setTextColor(Color.WHITE)
+                                    }
                                 }
+
+
 
                             }
                         }
@@ -156,8 +191,6 @@ class CheckIn : AppCompatActivity(), SensorEventListener {
         val scn: CodeScannerView = findViewById(R.id.scn)
 
         codeScanner = CodeScanner(this, scn)
-
-
 
         codeScanner.apply {
             camera = CodeScanner.CAMERA_BACK

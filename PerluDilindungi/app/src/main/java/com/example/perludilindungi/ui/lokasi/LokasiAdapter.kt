@@ -41,7 +41,7 @@ class LokasiAdapter(private val obj : FaskesProperty): RecyclerView.Adapter<Loka
                 jenisView.setBackgroundColor(Color.parseColor("#00DDFF"))
                 jenisView.setTextColor(Color.WHITE)
             } else if (jenisView.text.toString() == "KLINIK"){
-                jenisView.setBackgroundColor(Color.parseColor("#FFF800"))
+                jenisView.setBackgroundColor(Color.parseColor("#FFA900"))
                 jenisView.setTextColor(Color.WHITE)
             }
         }
