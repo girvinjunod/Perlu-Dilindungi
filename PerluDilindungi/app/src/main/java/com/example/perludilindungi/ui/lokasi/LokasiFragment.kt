@@ -244,7 +244,7 @@ class LokasiFragment : Fragment() {
 
                                         if (cekDB != null) {
                                             Timber.i("ADA DI DB")
-                                            bookmarkBtn?.setBackgroundColor(Color.parseColor("#4d4d4d"))
+                                            bookmarkBtn?.setBackgroundColor(Color.parseColor("#FF0000"))
                                         }else{
                                             bookmarkBtn?.setBackgroundColor(Color.parseColor("#ff80ff"))
                                         }
@@ -256,8 +256,11 @@ class LokasiFragment : Fragment() {
 
                                             if (cekDB != null) {
                                                 Timber.i("ADA DI DB")
-                                                bookmarkBtn.setBackgroundColor(Color.parseColor("#4d4d4d"))
-                                                bookmarkBtn.isActivated = false
+                                                db?.bookmarkDao()?.delBookmarkFromID(
+                                                    faskes.data?.get(position)?.kode.toString()
+                                                )
+                                                bookmarkBtn.setBackgroundColor(Color.parseColor("#ff80ff"))
+
                                             }else{
                                                 db?.bookmarkDao()?.addBookmark(
                                                     Bookmark(
@@ -272,8 +275,8 @@ class LokasiFragment : Fragment() {
                                                         faskes.data?.get(position)?.longitude .toString()
                                                     ))
                                                 Timber.d("BOOKMARK ADDED")
-                                                bookmarkBtn.setBackgroundColor(Color.parseColor("#4d4d4d"))
-                                                bookmarkBtn.isActivated = false
+                                                bookmarkBtn.setBackgroundColor(Color.parseColor("#FF0000"))
+
                                             }
 
                                         }
