@@ -70,6 +70,7 @@ Bryan Rinaldo - 13519103
 Jeanne D'Arc Amara Hanieka - 13519082
 - Membuka Google Maps dari Detail Informasi
 - Melakukan "Check-In"
+- Styling
 
 Girvin Junod - 13519096
 - Splash Screen
