@@ -15,4 +15,7 @@ interface BookmarkDao {
 
     @Query("SELECT * FROM bookmark WHERE kodeFaskes IN (:bookmarkID)")
     fun checkBookmark(bookmarkID : String): Bookmark
+
+    @Query("DELETE FROM bookmark WHERE kodeFaskes IN (:bookmarkID)")
+    fun delBookmarkFromID(bookmarkID : String)
 }
