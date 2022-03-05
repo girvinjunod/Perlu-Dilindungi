@@ -8,6 +8,7 @@ Aplikasi akan menampilkan dua buah spinner agar pengguna dapat memilih provinsi 
 ### Menampilkan Detail Informasi Faskes
 ### Menampilkan Daftar Bookmark Faskes
 ### Melakukan "Check-In"
+Saat pengguna ingin melakukan check-in, pengguna dapat menekan tombol scanner yang tersedia pada setiap halaman. Dengan ditekannya tombol tersebut, pengguna akan dibawa ke halaman scanner yang menunjukkan temperatur ruangat saat itu (khusus untuk perangkat-perangkat yang memiliki sensor temperatur), serta sebuah kamera. Pengguna harus terlebih dahulu memberikan akses kepada aplikasi untuk membuka akses kamera agar pengguna dapat melakukan scanning terhadap QR Code Perlu Dilindungi. Saat pengguna melakukan scan QR Code, akan dikirimkan string yang diperoleh dari QR Code, serta informasi lokasi pengguna (latitude dan longitude) ke server Perlu Dilindungi. Setelah itu, akan didapatkan response berupa status pengguna (berwarna hijau untuk sudah vaksin 2 kali, warna kuning untuk vaksin 1 kali, warna merah untuk belum vaksin, dan warna hitam untuk pasien COVID-19). Apabila pengguna masuk ke kategori merah/hitam, akan ditunjukkan penolakan serta alasannya.
 # Library
 | Nama     | Alasan |
 | ----------- | ----------- |
@@ -16,6 +17,9 @@ Aplikasi akan menampilkan dua buah spinner agar pengguna dapat memilih provinsi 
 | Moshi  | Memudahkan parsing JSON dari API|
 | Picasso  | Memudahkan load image dari URL|
 | Google Play Services  | Mendapatkan lokasi pengguna|
+| JSON Parser | Memudahkan mengekstrasi informasi dari data JSON|
+| Code Scanner | Scanner berbasis ZXing untuk proses pembacaan string QR Code|
+
 # Screenshot Aplikasi
 Screenshot aplikasi (dimasukkan dalam folder screenshot)
 # Pembagian Kerja
